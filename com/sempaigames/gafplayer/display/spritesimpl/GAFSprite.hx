@@ -1,31 +1,31 @@
 package com.sempaigames.gafplayer.display.spritesimpl;
 
-import com.sempaigames.gafplayer.tags.TagDefineAnimationFrames2.Frame;
-import com.sempaigames.gafplayer.tags.TagDefineAnimationFrames2;
 import com.sempaigames.gafplayer.tags.TagDefineAnimationObjects;
 import com.sempaigames.gafplayer.tags.TagDefineAtlas;
-import com.sempaigames.gafplayer.tags.TagDefineStage;
 import com.sempaigames.gafplayer.tags.TagDefineTimeline;
+
 import flash.display.Bitmap;
-import flash.display.BitmapData;
 import flash.display.Sprite;
-import flash.events.Event;
-import flash.events.MouseEvent;
-import flash.Lib;
+
 import openfl.display.PixelSnapping;
 
-class GAFSprite extends AbstractGafSprite {
-
+class GAFSprite extends AbstractGafSprite 
+{
 	var animationObjects : Map<Int, Sprite>;
 
-	public function new (p : ParserResult) {
+	public function new (p : ParserResult)
+	{
 		super(p);
+		
 		animationObjects = new Map<Int, Sprite>();
 		var tmp = p.getTagsByType(TagDefineAtlas)[0];
 		var atlas = new Atlas(tmp);
 		var pAnimationObjects = p.getTagsByType(TagDefineAnimationObjects)[0];
+		
 		var containerSpr = new Sprite();
-		for (obj in pAnimationObjects.objects) {
+		
+		for (obj in pAnimationObjects.objects)
+		{
 			var spr = new Sprite();
 			var bmp = new Bitmap(atlas.elements[obj.atlasIdRef], PixelSnapping.AUTO, true);
 			spr.addChild(bmp);
@@ -35,13 +35,18 @@ class GAFSprite extends AbstractGafSprite {
 			bmp.y = Std.int(-tmp.pivot.y);
 			containerSpr.addChild(spr);
 		}
+		
 		this.addChild(containerSpr);
+		
 		var pivot = p.getTagsByType(TagDefineTimeline)[0].pivot;
-		containerSpr.x = pivot.x;
-		containerSpr.y = pivot.y;
-		do {
+		//containerSpr.x = pivot.x;
+		//containerSpr.y = pivot.y;
+		
+		do
+		{
 			advanceFrame();
-		} while (currentFrame!=0);
+		} 
+		while (currentFrame!=0);
 	}
 
 	override function gotoFrame (target : Int) : Void {

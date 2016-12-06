@@ -42,18 +42,23 @@ class HeaderParser {
 
 	}
 
-	public static function readHeaderEndV4 (bytes : ByteArray, header : Header) {
-
+	public static function readHeaderEndV4 (bytes : ByteArray, header : Header)
+	{
+		bytes.position = 0;
 		var scaleValuesCount = bytes.readUnsignedInt();
 		header.scaleValues = [];
-		while (scaleValuesCount>0) {
+		
+		while (scaleValuesCount > 0)
+		{
 			header.scaleValues.push(bytes.readFloat());
 			scaleValuesCount--;
 		}
 
 		var csfValuesCount = bytes.readUnsignedInt();
 		header.csfValues = [];
-		while (csfValuesCount>0) {
+		
+		while (csfValuesCount > 0)
+		{
 			header.csfValues.push(bytes.readFloat());
 			csfValuesCount--;
 		}
